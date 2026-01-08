@@ -565,7 +565,7 @@
             <div class="hero-label">Software Engineer</div>
             <h1>I build tools that make <em>technical teams</em> more efficient</h1>
             <p class="hero-description">
-                Software Engineering student at Edinburgh Napier University with hands-on experience automating workflows, building dashboards, and migrating legacy systems.
+                Software Engineering graduate from Edinburgh Napier University with hands-on experience automating workflows, building dashboards, and delivering data tools for clients.
             </p>
             <div class="hero-meta">
                 <div class="hero-meta-item">
@@ -573,12 +573,12 @@
                     <span class="hero-meta-value">Edinburgh Napier University</span>
                 </div>
                 <div class="hero-meta-item">
-                    <span class="hero-meta-label">Recent Role</span>
-                    <span class="hero-meta-value">IT Operations Intern, Cirrus Logic</span>
+                    <span class="hero-meta-label">Current</span>
+                    <span class="hero-meta-value">Freelance Python Developer</span>
                 </div>
                 <div class="hero-meta-item">
                     <span class="hero-meta-label">Focus</span>
-                    <span class="hero-meta-value">Python, Automation, Data Visualization</span>
+                    <span class="hero-meta-value">Python, Automation, Data Extraction</span>
                 </div>
             </div>
         </div>
@@ -593,18 +593,36 @@
         <div class="experience-card">
             <div class="experience-header">
                 <div>
+                    <h3 class="experience-title">Freelance Python Developer</h3>
+                    <div class="experience-company">Upwork</div>
+                </div>
+                <span class="experience-date">2024 – Present</span>
+            </div>
+            <p class="experience-description">
+                Building data extraction tools and browser automation for clients, with a focus on delivering clean, documented code that works reliably.
+            </p>
+            <ul class="experience-highlights">
+                <li>Built a Google Trends scraper extracting search interest data across 300+ keywords with automated rate limiting, progress tracking, and professional documentation</li>
+                <li>Developed Playwright browser automation to extract SEMrush analytics for 320+ domains, handling authentication, page interactions, and CSV consolidation</li>
+                <li>Client returned for a second project after successful first delivery, with potential for ongoing work</li>
+            </ul>
+        </div>
+
+        <div class="experience-card">
+            <div class="experience-header">
+                <div>
                     <h3 class="experience-title">IT Operations Intern</h3>
                     <div class="experience-company">Cirrus Logic</div>
                 </div>
-                <span class="experience-date">2024</span>
+                <span class="experience-date">2024 – 2025</span>
             </div>
             <p class="experience-description">
                 Worked on internal tooling and infrastructure projects that improved team efficiency and documentation quality across the IT department.
             </p>
             <ul class="experience-highlights">
-                <li>Migrated a legacy internal wiki to a modern platform using Python and BeautifulSoup, preserving content structure and formatting across hundreds of pages</li>
+                <li>Migrated a legacy internal wiki to Confluence using Python and BeautifulSoup, preserving content structure and formatting across 1,000+ pages</li>
                 <li>Built real-time IT metrics dashboards using Dash and Plotly, giving the team visibility into system health and ticket resolution times</li>
-                <li>Automated security vulnerability checks, reducing manual audit time and improving compliance tracking</li>
+                <li>Automated security vulnerability checks across the Atlassian stack, reducing manual audit time and improving compliance tracking</li>
             </ul>
         </div>
     </section>
@@ -616,6 +634,60 @@
         </div>
 
         <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-content">
+                    <span class="project-status status-completed">Completed</span>
+                    <h3 class="project-title">Google Trends Scraper</h3>
+                    <p class="project-description">
+                        A Python tool built for a client to extract search interest data from Google Trends across hundreds of keywords. Designed to handle rate limiting gracefully and resume from interruptions.
+                    </p>
+                    <ul class="project-features">
+                        <li>Automated rate limiting with random delays to avoid blocks</li>
+                        <li>Progress tracking with resume capability</li>
+                        <li>Multiple date range support with CSV output</li>
+                        <li>Professional documentation for client handoff</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">pytrends</span>
+                        <span class="tech-tag">Pandas</span>
+                    </div>
+                </div>
+                <div class="project-links">
+                    <span class="project-link" style="color: var(--text-muted); cursor: default;">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        Client Project
+                    </span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-content">
+                    <span class="project-status status-completed">Completed</span>
+                    <h3 class="project-title">SEMrush Data Automation</h3>
+                    <p class="project-description">
+                        Browser automation tool to extract domain analytics from SEMrush for 320+ URLs. Handles login sessions, page interactions, and consolidates all exports into a single dataset.
+                    </p>
+                    <ul class="project-features">
+                        <li>Playwright-based browser automation with session management</li>
+                        <li>Sequential URL processing with human-like delays</li>
+                        <li>Automatic CSV export and consolidation</li>
+                        <li>Error handling and progress tracking</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Playwright</span>
+                        <span class="tech-tag">Pandas</span>
+                    </div>
+                </div>
+                <div class="project-links">
+                    <span class="project-link" style="color: var(--text-muted); cursor: default;">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        Client Project
+                    </span>
+                </div>
+            </div>
+
             <div class="project-card">
                 <div class="project-content">
                     <span class="project-status status-completed">Completed</span>
@@ -678,7 +750,7 @@
                     <span class="project-status status-completed">Completed</span>
                     <h3 class="project-title">Wiki Migration Tool</h3>
                     <p class="project-description">
-                        Automated migration of a legacy internal wiki to a modern platform during my Cirrus Logic internship. Built to preserve formatting, structure, and links across hundreds of documentation pages.
+                        Automated migration of a legacy internal wiki to Confluence during my Cirrus Logic internship. Built to preserve formatting, structure, and links across 1,000+ documentation pages.
                     </p>
                     <ul class="project-features">
                         <li>HTML parsing and content extraction with BeautifulSoup</li>
@@ -744,7 +816,7 @@
                     <span class="skill-item">Python</span>
                     <span class="skill-item">C++</span>
                     <span class="skill-item">JavaScript</span>
-                    <span class="skill-item">Java</span>
+                    <span class="skill-item">Go</span>
                     <span class="skill-item">SQL</span>
                     <span class="skill-item">HTML/CSS</span>
                 </div>
@@ -756,6 +828,7 @@
                     <span class="skill-item">Flask</span>
                     <span class="skill-item">Dash</span>
                     <span class="skill-item">Plotly</span>
+                    <span class="skill-item">Playwright</span>
                     <span class="skill-item">BeautifulSoup</span>
                     <span class="skill-item">Pandas</span>
                     <span class="skill-item">SFML</span>
@@ -767,7 +840,8 @@
                 <div class="skill-list">
                     <span class="skill-item">Git</span>
                     <span class="skill-item">Linux</span>
-                    <span class="skill-item">CMake</span>
+                    <span class="skill-item">Docker</span>
+                    <span class="skill-item">AWS</span>
                     <span class="skill-item">REST APIs</span>
                     <span class="skill-item">Agile</span>
                 </div>
@@ -780,10 +854,10 @@
             <div class="section-label">Get in Touch</div>
             <h2>Let's connect</h2>
             <p class="contact-description">
-                I'm currently looking for graduate and internship opportunities. If you'd like to discuss a role or just want to say hello, I'd love to hear from you.
+                I'm currently looking for graduate opportunities in software engineering and IT. If you'd like to discuss a role or just want to say hello, I'd love to hear from you.
             </p>
             <div class="contact-links">
-                <a href="mailto:konstantin.dilov@example.com" class="contact-link">
+                <a href="mailto:kdilov@protonmail.com" class="contact-link">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                     Email
                 </a>
