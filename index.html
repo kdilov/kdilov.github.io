@@ -6,7 +6,7 @@
     <title>Konstantin Dilov — Software Engineer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-primary: #FAF9F7;
@@ -16,8 +16,11 @@
             --text-muted: #8a8a8a;
             --accent: #2563EB;
             --accent-light: #DBEAFE;
+            --accent-dark: #1d4ed8;
             --border: #E5E2DC;
             --success: #059669;
+            --highlight: #EFF6FF;
+            --highlight-border: #2563EB;
         }
 
         * {
@@ -38,171 +41,261 @@
             font-size: 16px;
         }
 
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 1.25rem 2rem;
-            background: rgba(250, 249, 247, 0.92);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border);
-            z-index: 1000;
-        }
-
-        .nav-inner {
+        /* Main Layout */
+        .page-container {
             max-width: 1100px;
             margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 2rem;
         }
 
-        .nav-logo {
+        /* Header Section - Name + Contact */
+        .header {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 2rem;
+            align-items: start;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--text-primary);
+            margin-bottom: 2rem;
+        }
+
+        .header-name {
             font-family: 'Instrument Serif', serif;
-            font-size: 1.25rem;
-            color: var(--text-primary);
-            text-decoration: none;
-            letter-spacing: -0.02em;
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 400;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
         }
 
-        nav ul {
-            list-style: none;
+        .header-title {
+            font-size: 1.1rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-top: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .contact-bar {
             display: flex;
-            gap: 2.5rem;
+            flex-direction: column;
+            gap: 0.5rem;
+            align-items: flex-end;
         }
 
-        nav a {
-            color: var(--text-secondary);
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-primary);
             text-decoration: none;
             font-size: 0.9rem;
             font-weight: 500;
             transition: color 0.2s ease;
         }
 
-        nav a:hover {
-            color: var(--text-primary);
+        .contact-link:hover {
+            color: var(--accent);
         }
 
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
+        .contact-link svg {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+
+        /* Main Grid Layout */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 3rem;
+        }
+
+        /* Sidebar - TOC */
+        .sidebar {
+            position: sticky;
+            top: 2rem;
+            height: fit-content;
+        }
+
+        .toc {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+        }
+
+        .toc-title {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .toc-list {
+            list-style: none;
+        }
+
+        .toc-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .toc-link {
             display: flex;
             align-items: center;
-            padding: 8rem 2rem 6rem;
-            max-width: 1100px;
-            margin: 0 auto;
+            gap: 0.75rem;
+            padding: 0.6rem 0.75rem;
+            border-radius: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
         }
 
-        .hero-content {
-            max-width: 720px;
-        }
-
-        .hero-label {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            margin-bottom: 1.5rem;
-            opacity: 0;
-            animation: fadeUp 0.6s ease forwards;
-        }
-
-        .hero h1 {
-            font-family: 'Instrument Serif', serif;
-            font-size: clamp(2.75rem, 6vw, 4rem);
-            font-weight: 400;
-            line-height: 1.15;
-            letter-spacing: -0.025em;
+        .toc-link:hover {
+            background: white;
             color: var(--text-primary);
-            margin-bottom: 1.75rem;
-            opacity: 0;
-            animation: fadeUp 0.6s ease 0.1s forwards;
         }
 
-        .hero h1 em {
+        .toc-link.active {
+            background: var(--accent);
+            color: white;
+        }
+
+        .toc-number {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1rem;
+            font-weight: 400;
+            min-width: 1.5rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            min-width: 0;
+        }
+
+        /* Profile Section */
+        .profile-section {
+            margin-bottom: 3rem;
+        }
+
+        .profile-headline {
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(1.75rem, 3vw, 2.25rem);
+            font-weight: 400;
+            line-height: 1.3;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-headline em {
             font-style: italic;
             color: var(--accent);
         }
 
-        .hero-description {
-            font-size: 1.15rem;
-            color: var(--text-secondary);
-            max-width: 540px;
-            margin-bottom: 2.5rem;
-            opacity: 0;
-            animation: fadeUp 0.6s ease 0.2s forwards;
-        }
-
-        .hero-meta {
-            display: flex;
-            gap: 2rem;
-            flex-wrap: wrap;
-            opacity: 0;
-            animation: fadeUp 0.6s ease 0.3s forwards;
-        }
-
-        .hero-meta-item {
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-        }
-
-        .hero-meta-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            color: var(--text-muted);
-        }
-
-        .hero-meta-value {
-            font-size: 0.95rem;
+        .profile-text {
+            background: linear-gradient(135deg, var(--highlight) 0%, #F8FAFC 100%);
+            border-left: 4px solid var(--highlight-border);
+            padding: 1.5rem 1.75rem;
+            border-radius: 0 12px 12px 0;
+            font-size: 1.05rem;
+            line-height: 1.8;
             color: var(--text-primary);
+        }
+
+        .profile-text strong {
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .profile-text .highlight {
+            background: rgba(37, 99, 235, 0.15);
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            font-weight: 600;
         }
 
         /* Section Styling */
         section {
-            padding: 6rem 2rem;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        .section-header {
             margin-bottom: 3.5rem;
         }
 
-        .section-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--text-muted);
-            margin-bottom: 0.75rem;
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-number {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.5rem;
+            color: var(--accent);
         }
 
         h2 {
             font-family: 'Instrument Serif', serif;
-            font-size: 2.25rem;
+            font-size: 1.5rem;
             font-weight: 400;
             letter-spacing: -0.02em;
+            color: var(--text-primary);
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .skill-category {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.25rem;
+            border: 1px solid var(--border);
+        }
+
+        .skill-category-title {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .skill-item {
+            background: white;
+            border: 1px solid var(--border);
+            padding: 0.3rem 0.7rem;
+            border-radius: 5px;
+            font-size: 0.8rem;
             color: var(--text-primary);
         }
 
         /* Experience Section */
         .experience-card {
             background: var(--bg-secondary);
-            border-radius: 16px;
-            padding: 2.5rem;
-            margin-bottom: 1.5rem;
+            border-radius: 12px;
+            padding: 1.75rem;
+            margin-bottom: 1.25rem;
             border: 1px solid var(--border);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .experience-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
         }
 
         .experience-header {
@@ -210,33 +303,38 @@
             justify-content: space-between;
             align-items: flex-start;
             flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 1.25rem;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
         }
 
         .experience-title {
             font-family: 'Instrument Serif', serif;
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             font-weight: 400;
             color: var(--text-primary);
         }
 
         .experience-company {
-            font-size: 1rem;
+            font-size: 0.95rem;
             color: var(--accent);
-            font-weight: 500;
-            margin-top: 0.25rem;
+            font-weight: 600;
+            margin-top: 0.15rem;
         }
 
         .experience-date {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
-            font-weight: 500;
+            font-weight: 600;
+            background: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
         }
 
         .experience-description {
             color: var(--text-secondary);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
         }
 
         .experience-highlights {
@@ -246,18 +344,18 @@
         .experience-highlights li {
             position: relative;
             padding-left: 1.25rem;
-            margin-bottom: 0.6rem;
+            margin-bottom: 0.5rem;
             color: var(--text-secondary);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
         .experience-highlights li::before {
             content: '';
             position: absolute;
             left: 0;
-            top: 0.6rem;
-            width: 6px;
-            height: 6px;
+            top: 0.55rem;
+            width: 5px;
+            height: 5px;
             background: var(--accent);
             border-radius: 50%;
         }
@@ -265,33 +363,33 @@
         /* Projects Section */
         .projects-grid {
             display: grid;
-            gap: 2rem;
+            gap: 1.25rem;
         }
 
         .project-card {
             background: var(--bg-secondary);
-            border-radius: 16px;
-            padding: 2.5rem;
+            border-radius: 12px;
+            padding: 1.75rem;
             border: 1px solid var(--border);
             display: grid;
             grid-template-columns: 1fr auto;
-            gap: 2rem;
+            gap: 1.5rem;
             align-items: start;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .project-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
         }
 
         .project-status {
             display: inline-flex;
             align-items: center;
-            gap: 0.4rem;
-            padding: 0.35rem 0.85rem;
+            gap: 0.35rem;
+            padding: 0.25rem 0.7rem;
             border-radius: 20px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.04em;
@@ -304,37 +402,37 @@
 
         .status-completed::before {
             content: '';
-            width: 6px;
-            height: 6px;
+            width: 5px;
+            height: 5px;
             background: var(--success);
             border-radius: 50%;
         }
 
         .project-title {
             font-family: 'Instrument Serif', serif;
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             font-weight: 400;
             color: var(--text-primary);
-            margin: 1rem 0 0.75rem;
+            margin: 0.75rem 0 0.5rem;
         }
 
         .project-description {
             color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
         }
 
         .project-features {
             list-style: none;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .project-features li {
             position: relative;
-            padding-left: 1.25rem;
-            margin-bottom: 0.4rem;
+            padding-left: 1rem;
+            margin-bottom: 0.3rem;
             color: var(--text-secondary);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .project-features li::before {
@@ -347,32 +445,32 @@
         .tech-stack {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
+            gap: 0.4rem;
         }
 
         .tech-tag {
             background: var(--accent-light);
             color: var(--accent);
-            padding: 0.3rem 0.75rem;
-            border-radius: 6px;
-            font-size: 0.8rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 5px;
+            font-size: 0.75rem;
             font-weight: 500;
         }
 
         .project-links {
             display: flex;
             flex-direction: column;
-            gap: 0.75rem;
-            min-width: 120px;
+            gap: 0.5rem;
+            min-width: 100px;
         }
 
         .project-link {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.4rem;
             color: var(--text-secondary);
             text-decoration: none;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 500;
             transition: color 0.2s ease;
         }
@@ -382,139 +480,86 @@
         }
 
         .project-link svg {
-            width: 16px;
-            height: 16px;
-        }
-
-        /* Skills Section */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .skill-category {
-            background: var(--bg-secondary);
-            border-radius: 16px;
-            padding: 2rem;
-            border: 1px solid var(--border);
-        }
-
-        .skill-category-title {
-            font-family: 'Instrument Serif', serif;
-            font-size: 1.25rem;
-            font-weight: 400;
-            color: var(--text-primary);
-            margin-bottom: 1.25rem;
-        }
-
-        .skill-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .skill-item {
-            background: white;
-            border: 1px solid var(--border);
-            padding: 0.4rem 0.85rem;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            color: var(--text-primary);
-        }
-
-        /* Contact Section */
-        .contact-section {
-            background: var(--bg-secondary);
-            border-radius: 20px;
-            padding: 4rem;
-            text-align: center;
-            border: 1px solid var(--border);
-        }
-
-        .contact-section h2 {
-            margin-bottom: 1rem;
-        }
-
-        .contact-description {
-            color: var(--text-secondary);
-            max-width: 480px;
-            margin: 0 auto 2.5rem;
-        }
-
-        .contact-links {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .contact-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            padding: 0.85rem 1.5rem;
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            color: var(--text-primary);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: all 0.2s ease;
-        }
-
-        .contact-link:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
-        }
-
-        .contact-link svg {
-            width: 18px;
-            height: 18px;
+            width: 14px;
+            height: 14px;
         }
 
         /* Footer */
         footer {
             text-align: center;
-            padding: 3rem 2rem;
+            padding: 2rem;
             color: var(--text-muted);
             font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
         }
 
         /* Animations */
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
+        .animate {
+            animation: fadeIn 0.5s ease forwards;
         }
 
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .animate-delay-1 { animation-delay: 0.1s; opacity: 0; }
+        .animate-delay-2 { animation-delay: 0.2s; opacity: 0; }
+        .animate-delay-3 { animation-delay: 0.3s; opacity: 0; }
 
         /* Responsive */
-        @media (max-width: 768px) {
-            nav ul {
+        @media (max-width: 900px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+            }
+
+            .toc {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                align-items: center;
+            }
+
+            .toc-title {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+
+            .toc-list {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .toc-item {
+                margin-bottom: 0;
+            }
+
+            .toc-link {
+                padding: 0.5rem 0.75rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .page-container {
+                padding: 1.5rem;
+            }
+
+            .header {
+                grid-template-columns: 1fr;
                 gap: 1.5rem;
             }
 
-            .hero {
-                padding-top: 7rem;
+            .contact-bar {
+                align-items: flex-start;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 1rem;
             }
 
             .project-card {
@@ -525,361 +570,372 @@
                 flex-direction: row;
             }
 
-            .contact-section {
-                padding: 3rem 2rem;
-            }
-
-            .contact-links {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-
-        @media (max-width: 480px) {
-            nav ul {
-                display: none;
-            }
-
-            .hero-meta {
-                flex-direction: column;
-                gap: 1rem;
+            .profile-text {
+                padding: 1.25rem;
             }
         }
     </style>
 </head>
 <body>
-    <nav>
-        <div class="nav-inner">
-            <a href="#" class="nav-logo">KD</a>
-            <ul>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-label">Software Engineer</div>
-            <h1>I build tools that make <em>technical teams</em> more efficient</h1>
-            <p class="hero-description">
-                Software Engineering graduate from Edinburgh Napier University with hands-on experience automating workflows, building dashboards, and delivering data tools for clients.
-            </p>
-            <div class="hero-meta">
-                <div class="hero-meta-item">
-                    <span class="hero-meta-label">Education</span>
-                    <span class="hero-meta-value">Edinburgh Napier University</span>
-                </div>
-                <div class="hero-meta-item">
-                    <span class="hero-meta-label">Current</span>
-                    <span class="hero-meta-value">Freelance Python Developer</span>
-                </div>
-                <div class="hero-meta-item">
-                    <span class="hero-meta-label">Focus</span>
-                    <span class="hero-meta-value">Python, Automation, Data Extraction</span>
-                </div>
+    <div class="page-container">
+        <!-- Header with Name & Contact -->
+        <header class="header animate">
+            <div>
+                <h1 class="header-name">Konstantin Dilov</h1>
+                <div class="header-title">Graduate Software Engineer</div>
             </div>
-        </div>
-    </section>
-
-    <section id="experience" class="fade-in">
-        <div class="section-header">
-            <div class="section-label">Professional Experience</div>
-            <h2>Where I've worked</h2>
-        </div>
-
-        <div class="experience-card">
-            <div class="experience-header">
-                <div>
-                    <h3 class="experience-title">Freelance Python Developer</h3>
-                    <div class="experience-company">Upwork</div>
-                </div>
-                <span class="experience-date">2025 – Present</span>
-            </div>
-            <p class="experience-description">
-                Building data extraction tools and browser automation for clients, with a focus on delivering clean, documented code that works reliably.
-            </p>
-            <ul class="experience-highlights">
-                <li>Built a Google Trends scraper extracting search interest data across 300+ keywords with automated rate limiting, progress tracking, and professional documentation</li>
-                <li>Developed Playwright browser automation to extract SEMrush analytics for 320+ domains, handling authentication, page interactions, and CSV consolidation</li>
-                <li>Client returned for a second project after successful first delivery, with potential for ongoing work</li>
-            </ul>
-        </div>
-
-        <div class="experience-card">
-            <div class="experience-header">
-                <div>
-                    <h3 class="experience-title">IT Operations Intern</h3>
-                    <div class="experience-company">Cirrus Logic</div>
-                </div>
-                <span class="experience-date">2024 – 2025</span>
-            </div>
-            <p class="experience-description">
-                Worked on internal tooling and infrastructure projects that improved team efficiency and documentation quality across the IT department.
-            </p>
-            <ul class="experience-highlights">
-                <li>Migrated a legacy internal wiki to Confluence using Python and BeautifulSoup, preserving content structure and formatting across 1,000+ pages</li>
-                <li>Built real-time IT metrics dashboards using Dash and Plotly, giving the team visibility into system health and ticket resolution times</li>
-                <li>Automated security vulnerability checks across the Atlassian stack, reducing manual audit time and improving compliance tracking</li>
-            </ul>
-        </div>
-    </section>
-
-    <section id="projects" class="fade-in">
-        <div class="section-header">
-            <div class="section-label">Selected Work</div>
-            <h2>Projects I've built</h2>
-        </div>
-
-        <div class="projects-grid">
-            <div class="project-card">
-                <div class="project-content">
-                    <span class="project-status status-completed">Completed</span>
-                    <h3 class="project-title">Google Trends Scraper</h3>
-                    <p class="project-description">
-                        A Python tool built for a client to extract search interest data from Google Trends across hundreds of keywords. Designed to handle rate limiting gracefully and resume from interruptions.
-                    </p>
-                    <ul class="project-features">
-                        <li>Automated rate limiting with random delays to avoid blocks</li>
-                        <li>Progress tracking with resume capability</li>
-                        <li>Multiple date range support with CSV output</li>
-                        <li>Professional documentation for client handoff</li>
-                    </ul>
-                    <div class="tech-stack">
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">pytrends</span>
-                        <span class="tech-tag">Pandas</span>
-                    </div>
-                </div>
-                <div class="project-links">
-                    <span class="project-link" style="color: var(--text-muted); cursor: default;">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                        Client Project
-                    </span>
-                </div>
-            </div>
-
-            <div class="project-card">
-                <div class="project-content">
-                    <span class="project-status status-completed">Completed</span>
-                    <h3 class="project-title">SEMrush Data Automation</h3>
-                    <p class="project-description">
-                        Browser automation tool to extract domain analytics from SEMrush for 320+ URLs. Handles login sessions, page interactions, and consolidates all exports into a single dataset.
-                    </p>
-                    <ul class="project-features">
-                        <li>Playwright-based browser automation with session management</li>
-                        <li>Sequential URL processing with human-like delays</li>
-                        <li>Automatic CSV export and consolidation</li>
-                        <li>Error handling and progress tracking</li>
-                    </ul>
-                    <div class="tech-stack">
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">Playwright</span>
-                        <span class="tech-tag">Pandas</span>
-                    </div>
-                </div>
-                <div class="project-links">
-                    <span class="project-link" style="color: var(--text-muted); cursor: default;">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                        Client Project
-                    </span>
-                </div>
-            </div>
-
-            <div class="project-card">
-                <div class="project-content">
-                    <span class="project-status status-completed">Completed</span>
-                    <h3 class="project-title">Garage Inventory System</h3>
-                    <p class="project-description">
-                        A web application for managing garage inventory with QR code functionality, built as part of university coursework. Designed to solve the real problem of tracking tools and parts across multiple storage locations.
-                    </p>
-                    <ul class="project-features">
-                        <li>QR code generation and scanning for quick item lookup</li>
-                        <li>User authentication with role-based access control</li>
-                        <li>Admin dashboard for inventory analytics</li>
-                        <li>Search and filter functionality across categories</li>
-                    </ul>
-                    <div class="tech-stack">
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">Flask</span>
-                        <span class="tech-tag">SQLite</span>
-                        <span class="tech-tag">QR Code API</span>
-                        <span class="tech-tag">HTML/CSS</span>
-                    </div>
-                </div>
-                <div class="project-links">
-                    <a href="#" class="project-link">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-                        View Code
-                    </a>
-                </div>
-            </div>
-
-            <div class="project-card">
-                <div class="project-content">
-                    <span class="project-status status-completed">Completed</span>
-                    <h3 class="project-title">Echoes of Light</h3>
-                    <p class="project-description">
-                        A 2D puzzle-adventure game built collaboratively for Edinburgh Napier's Games Engineering module. Players manipulate light beams through mirrors and beacons to solve puzzles across three time periods.
-                    </p>
-                    <ul class="project-features">
-                        <li>Entity Component System architecture with modular game systems</li>
-                        <li>Light physics with beam reflection, splitting, and collision detection</li>
-                        <li>Enemy AI with patrol, chase, and attack behaviours</li>
-                        <li>Interactive tutorial and dialog system with typewriter effect</li>
-                    </ul>
-                    <div class="tech-stack">
-                        <span class="tech-tag">C++</span>
-                        <span class="tech-tag">SFML</span>
-                        <span class="tech-tag">CMake</span>
-                        <span class="tech-tag">ECS</span>
-                    </div>
-                </div>
-                <div class="project-links">
-                    <a href="https://github.com/kdilov/echoes-of-light" class="project-link">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-                        View Code
-                    </a>
-                </div>
-            </div>
-
-            <div class="project-card">
-                <div class="project-content">
-                    <span class="project-status status-completed">Completed</span>
-                    <h3 class="project-title">Wiki Migration Tool</h3>
-                    <p class="project-description">
-                        Automated migration of a legacy internal wiki to Confluence during my Cirrus Logic internship. Built to preserve formatting, structure, and links across 1,000+ documentation pages.
-                    </p>
-                    <ul class="project-features">
-                        <li>HTML parsing and content extraction with BeautifulSoup</li>
-                        <li>Automated formatting conversion between wiki syntaxes</li>
-                        <li>Link rewriting to maintain internal references</li>
-                        <li>Batch processing with error handling and logging</li>
-                    </ul>
-                    <div class="tech-stack">
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">BeautifulSoup</span>
-                        <span class="tech-tag">Regex</span>
-                        <span class="tech-tag">HTML</span>
-                    </div>
-                </div>
-                <div class="project-links">
-                    <span class="project-link" style="color: var(--text-muted); cursor: default;">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                        Internal Project
-                    </span>
-                </div>
-            </div>
-
-            <div class="project-card">
-                <div class="project-content">
-                    <span class="project-status status-completed">Completed</span>
-                    <h3 class="project-title">IT Metrics Dashboard</h3>
-                    <p class="project-description">
-                        Real-time dashboard built during my Cirrus Logic internship to visualize IT operations data. Replaced manual spreadsheet tracking with automated, live metrics.
-                    </p>
-                    <ul class="project-features">
-                        <li>Real-time data visualization with auto-refresh</li>
-                        <li>Interactive charts for ticket resolution trends</li>
-                        <li>System health monitoring displays</li>
-                        <li>Exportable reports for stakeholder updates</li>
-                    </ul>
-                    <div class="tech-stack">
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">Dash</span>
-                        <span class="tech-tag">Plotly</span>
-                        <span class="tech-tag">Pandas</span>
-                    </div>
-                </div>
-                <div class="project-links">
-                    <span class="project-link" style="color: var(--text-muted); cursor: default;">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                        Internal Project
-                    </span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="skills" class="fade-in">
-        <div class="section-header">
-            <div class="section-label">Technical Skills</div>
-            <h2>What I work with</h2>
-        </div>
-
-        <div class="skills-grid">
-            <div class="skill-category">
-                <h3 class="skill-category-title">Languages</h3>
-                <div class="skill-list">
-                    <span class="skill-item">Python</span>
-                    <span class="skill-item">C++</span>
-                    <span class="skill-item">JavaScript</span>
-                    <span class="skill-item">Go</span>
-                    <span class="skill-item">SQL</span>
-                    <span class="skill-item">HTML/CSS</span>
-                </div>
-            </div>
-
-            <div class="skill-category">
-                <h3 class="skill-category-title">Frameworks & Libraries</h3>
-                <div class="skill-list">
-                    <span class="skill-item">Flask</span>
-                    <span class="skill-item">Dash</span>
-                    <span class="skill-item">Plotly</span>
-                    <span class="skill-item">Playwright</span>
-                    <span class="skill-item">BeautifulSoup</span>
-                    <span class="skill-item">Pandas</span>
-                    <span class="skill-item">SFML</span>
-                </div>
-            </div>
-
-            <div class="skill-category">
-                <h3 class="skill-category-title">Tools & Practices</h3>
-                <div class="skill-list">
-                    <span class="skill-item">Git</span>
-                    <span class="skill-item">Linux</span>
-                    <span class="skill-item">Docker</span>
-                    <span class="skill-item">AWS</span>
-                    <span class="skill-item">REST APIs</span>
-                    <span class="skill-item">Agile</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="fade-in">
-        <div class="contact-section">
-            <div class="section-label">Get in Touch</div>
-            <h2>Let's connect</h2>
-            <p class="contact-description">
-                I'm currently looking for graduate opportunities in software engineering and IT. If you'd like to discuss a role or just want to say hello, I'd love to hear from you.
-            </p>
-            <div class="contact-links">
+            <div class="contact-bar">
                 <a href="mailto:kdilov@protonmail.com" class="contact-link">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                    Email
+                    kdilov@protonmail.com
                 </a>
                 <a href="https://github.com/kdilov" class="contact-link" target="_blank" rel="noopener">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-                    GitHub
+                    github.com/kdilov
                 </a>
                 <a href="https://linkedin.com/in/konstantindilov" class="contact-link" target="_blank" rel="noopener">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
                     LinkedIn
                 </a>
             </div>
-        </div>
-    </section>
+        </header>
 
-    <footer>
-        <p>Konstantin Dilov · Edinburgh · 2025</p>
-    </footer>
+        <div class="main-grid">
+            <!-- Sidebar TOC -->
+            <aside class="sidebar animate animate-delay-1">
+                <nav class="toc">
+                    <div class="toc-title">Contents</div>
+                    <ul class="toc-list">
+                        <li class="toc-item">
+                            <a href="#skills" class="toc-link">
+                                <span class="toc-number">01</span>
+                                Skills
+                            </a>
+                        </li>
+                        <li class="toc-item">
+                            <a href="#experience" class="toc-link">
+                                <span class="toc-number">02</span>
+                                Experience
+                            </a>
+                        </li>
+                        <li class="toc-item">
+                            <a href="#projects" class="toc-link">
+                                <span class="toc-number">03</span>
+                                Projects
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <!-- Profile Section -->
+                <div class="profile-section animate animate-delay-2">
+                    <h2 class="profile-headline">I build tools that make <em>technical teams</em> more efficient</h2>
+                    <div class="profile-text">
+                        <strong>Software Engineering graduate</strong> with hands-on experience building tools and automation for engineering teams at <span class="highlight">Cirrus Logic</span>. I developed <strong>Python utilities and dashboards</strong> that the team adopted into their daily workflow, migrated <span class="highlight">1,000+ legacy wiki pages</span> to Confluence, and <strong>automated security checks</strong> across the Atlassian stack. I also deliver <strong>data extraction tools</strong> and browser automation for freelance clients. I enjoy creating software that solves real problems and makes people's work easier.
+                    </div>
+                </div>
+
+                <!-- Skills Section -->
+                <section id="skills" class="animate animate-delay-3">
+                    <div class="section-header">
+                        <span class="section-number">01</span>
+                        <h2>Technical Skills</h2>
+                    </div>
+
+                    <div class="skills-grid">
+                        <div class="skill-category">
+                            <h3 class="skill-category-title">Frontend</h3>
+                            <div class="skill-list">
+                                <span class="skill-item">HTML/CSS</span>
+                                <span class="skill-item">React</span>
+                            </div>
+                        </div>
+
+                        <div class="skill-category">
+                            <h3 class="skill-category-title">Backend & APIs</h3>
+                            <div class="skill-list">
+                                <span class="skill-item">Python</span>
+                                <span class="skill-item">Flask</span>
+                                <span class="skill-item">Go</span>
+                                <span class="skill-item">C++</span>
+                                <span class="skill-item">REST APIs</span>
+                            </div>
+                        </div>
+
+                        <div class="skill-category">
+                            <h3 class="skill-category-title">Data & Visualization</h3>
+                            <div class="skill-list">
+                                <span class="skill-item">Relational Databases</span>
+                                <span class="skill-item">Pandas</span>
+                                <span class="skill-item">Dash</span>
+                                <span class="skill-item">Plotly</span>
+                            </div>
+                        </div>
+
+                        <div class="skill-category">
+                            <h3 class="skill-category-title">Testing & Automation</h3>
+                            <div class="skill-list">
+                                <span class="skill-item">pytest</span>
+                                <span class="skill-item">Playwright</span>
+                            </div>
+                        </div>
+
+                        <div class="skill-category">
+                            <h3 class="skill-category-title">DevOps & Deployment</h3>
+                            <div class="skill-list">
+                                <span class="skill-item">Git</span>
+                                <span class="skill-item">GitLab</span>
+                                <span class="skill-item">BitBucket</span>
+                                <span class="skill-item">Docker</span>
+                                <span class="skill-item">AWS</span>
+                            </div>
+                        </div>
+
+                        <div class="skill-category">
+                            <h3 class="skill-category-title">Project Management</h3>
+                            <div class="skill-list">
+                                <span class="skill-item">Jira</span>
+                                <span class="skill-item">Confluence</span>
+                                <span class="skill-item">Agile</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Experience Section -->
+                <section id="experience">
+                    <div class="section-header">
+                        <span class="section-number">02</span>
+                        <h2>Professional Experience</h2>
+                    </div>
+
+                    <div class="experience-card">
+                        <div class="experience-header">
+                            <div>
+                                <h3 class="experience-title">Freelance Python Developer</h3>
+                                <div class="experience-company">Upwork</div>
+                            </div>
+                            <span class="experience-date">2025 – Present</span>
+                        </div>
+                        <p class="experience-description">
+                            Building data extraction tools and browser automation for clients, with a focus on delivering clean, documented code that works reliably.
+                        </p>
+                        <ul class="experience-highlights">
+                            <li>Built a Google Trends scraper extracting search interest data across 300+ keywords with automated rate limiting, progress tracking, and professional documentation</li>
+                            <li>Developed Playwright browser automation to extract SEMrush analytics for 320+ domains, handling authentication, page interactions, and CSV consolidation</li>
+                            <li>Client returned for a second project after successful first delivery, with potential for ongoing work</li>
+                        </ul>
+                    </div>
+
+                    <div class="experience-card">
+                        <div class="experience-header">
+                            <div>
+                                <h3 class="experience-title">IT Operations Intern</h3>
+                                <div class="experience-company">Cirrus Logic</div>
+                            </div>
+                            <span class="experience-date">2024 – 2025</span>
+                        </div>
+                        <p class="experience-description">
+                            Worked on internal tooling and infrastructure projects that improved team efficiency and documentation quality across the IT department.
+                        </p>
+                        <ul class="experience-highlights">
+                            <li>Migrated a legacy internal wiki to Confluence using Python and BeautifulSoup, preserving content structure and formatting across 1,000+ pages</li>
+                            <li>Built real-time IT metrics dashboards using Dash and Plotly, giving the team visibility into system health and ticket resolution times</li>
+                            <li>Automated security vulnerability checks across the Atlassian stack, reducing manual audit time and improving compliance tracking</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Projects Section -->
+                <section id="projects">
+                    <div class="section-header">
+                        <span class="section-number">03</span>
+                        <h2>Selected Projects</h2>
+                    </div>
+
+                    <div class="projects-grid">
+                        <div class="project-card">
+                            <div class="project-content">
+                                <span class="project-status status-completed">Completed</span>
+                                <h3 class="project-title">Google Trends Scraper</h3>
+                                <p class="project-description">
+                                    A Python tool built for a client to extract search interest data from Google Trends across hundreds of keywords. Designed to handle rate limiting gracefully and resume from interruptions.
+                                </p>
+                                <ul class="project-features">
+                                    <li>Automated rate limiting with random delays to avoid blocks</li>
+                                    <li>Progress tracking with resume capability</li>
+                                    <li>Multiple date range support with CSV output</li>
+                                    <li>Professional documentation for client handoff</li>
+                                </ul>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">Python</span>
+                                    <span class="tech-tag">pytrends</span>
+                                    <span class="tech-tag">Pandas</span>
+                                </div>
+                            </div>
+                            <div class="project-links">
+                                <span class="project-link" style="color: var(--text-muted); cursor: default;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                    Client Project
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-content">
+                                <span class="project-status status-completed">Completed</span>
+                                <h3 class="project-title">SEMrush Data Automation</h3>
+                                <p class="project-description">
+                                    Browser automation tool to extract domain analytics from SEMrush for 320+ URLs. Handles login sessions, page interactions, and consolidates all exports into a single dataset.
+                                </p>
+                                <ul class="project-features">
+                                    <li>Playwright-based browser automation with session management</li>
+                                    <li>Sequential URL processing with human-like delays</li>
+                                    <li>Automatic CSV export and consolidation</li>
+                                    <li>Error handling and progress tracking</li>
+                                </ul>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">Python</span>
+                                    <span class="tech-tag">Playwright</span>
+                                    <span class="tech-tag">Pandas</span>
+                                </div>
+                            </div>
+                            <div class="project-links">
+                                <span class="project-link" style="color: var(--text-muted); cursor: default;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                    Client Project
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-content">
+                                <span class="project-status status-completed">Completed</span>
+                                <h3 class="project-title">Garage Inventory System</h3>
+                                <p class="project-description">
+                                    A web application for managing garage inventory with QR code functionality, built as part of university coursework. Designed to solve the real problem of tracking tools and parts across multiple storage locations.
+                                </p>
+                                <ul class="project-features">
+                                    <li>QR code generation and scanning for quick item lookup</li>
+                                    <li>User authentication with role-based access control</li>
+                                    <li>Admin dashboard for inventory analytics</li>
+                                    <li>Search and filter functionality across categories</li>
+                                </ul>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">Python</span>
+                                    <span class="tech-tag">Flask</span>
+                                    <span class="tech-tag">SQLite</span>
+                                    <span class="tech-tag">QR Code API</span>
+                                    <span class="tech-tag">HTML/CSS</span>
+                                </div>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                                    View Code
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-content">
+                                <span class="project-status status-completed">Completed</span>
+                                <h3 class="project-title">Echoes of Light</h3>
+                                <p class="project-description">
+                                    A 2D puzzle-adventure game built collaboratively for Edinburgh Napier's Games Engineering module. Players manipulate light beams through mirrors and beacons to solve puzzles across three time periods.
+                                </p>
+                                <ul class="project-features">
+                                    <li>Entity Component System architecture with modular game systems</li>
+                                    <li>Light physics with beam reflection, splitting, and collision detection</li>
+                                    <li>Enemy AI with patrol, chase, and attack behaviours</li>
+                                    <li>Interactive tutorial and dialog system with typewriter effect</li>
+                                </ul>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">C++</span>
+                                    <span class="tech-tag">SFML</span>
+                                    <span class="tech-tag">CMake</span>
+                                    <span class="tech-tag">ECS</span>
+                                </div>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/kdilov/echoes-of-light" class="project-link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                                    View Code
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-content">
+                                <span class="project-status status-completed">Completed</span>
+                                <h3 class="project-title">Wiki Migration Tool</h3>
+                                <p class="project-description">
+                                    Automated migration of a legacy internal wiki to Confluence during my Cirrus Logic internship. Built to preserve formatting, structure, and links across 1,000+ documentation pages.
+                                </p>
+                                <ul class="project-features">
+                                    <li>HTML parsing and content extraction with BeautifulSoup</li>
+                                    <li>Automated formatting conversion between wiki syntaxes</li>
+                                    <li>Link rewriting to maintain internal references</li>
+                                    <li>Batch processing with error handling and logging</li>
+                                </ul>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">Python</span>
+                                    <span class="tech-tag">BeautifulSoup</span>
+                                    <span class="tech-tag">Regex</span>
+                                    <span class="tech-tag">HTML</span>
+                                </div>
+                            </div>
+                            <div class="project-links">
+                                <span class="project-link" style="color: var(--text-muted); cursor: default;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                    Internal Project
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-content">
+                                <span class="project-status status-completed">Completed</span>
+                                <h3 class="project-title">IT Metrics Dashboard</h3>
+                                <p class="project-description">
+                                    Real-time dashboard built during my Cirrus Logic internship to visualize IT operations data. Replaced manual spreadsheet tracking with automated, live metrics.
+                                </p>
+                                <ul class="project-features">
+                                    <li>Real-time data visualization with auto-refresh</li>
+                                    <li>Interactive charts for ticket resolution trends</li>
+                                    <li>System health monitoring displays</li>
+                                    <li>Exportable reports for stakeholder updates</li>
+                                </ul>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">Python</span>
+                                    <span class="tech-tag">Dash</span>
+                                    <span class="tech-tag">Plotly</span>
+                                    <span class="tech-tag">Pandas</span>
+                                </div>
+                            </div>
+                            <div class="project-links">
+                                <span class="project-link" style="color: var(--text-muted); cursor: default;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                    Internal Project
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <footer>
+            <p>Konstantin Dilov · Edinburgh · 2025</p>
+        </footer>
+    </div>
 
     <script>
-        // Smooth scrolling
-        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+        // Smooth scrolling for TOC links
+        document.querySelectorAll('.toc-link').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
@@ -889,16 +945,29 @@
             });
         });
 
-        // Fade in on scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+        // Active TOC highlighting on scroll
+        const sections = document.querySelectorAll('section[id]');
+        const tocLinks = document.querySelectorAll('.toc-link');
+
+        function updateActiveToc() {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
                 }
             });
-        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveToc);
+        updateActiveToc();
     </script>
 </body>
 </html>
